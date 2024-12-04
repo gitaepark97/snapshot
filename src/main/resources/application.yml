@@ -14,7 +14,18 @@ spring:
     open-in-view: false
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         show_sql: true
+
+management:
+  endpoints:
+    web:
+      base-path: /management
+      exposure:
+        include: health, metrics
+
+jwt:
+  secret: 81907c6b4e2de1a78615d4b7a949579ce2933864e08189e5a9f65bf8d4f36ea88bd4502367c942c0fb8536d40baad78cb91e340e05cf0c0965b94a214534a151
+  expiration: 1h
