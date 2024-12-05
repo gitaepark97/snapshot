@@ -4,10 +4,6 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.6'
 }
 
-ext {
-    springModulithVersion = "1.3.0"
-}
-
 group = 'com.spring'
 version = '0.0.1-SNAPSHOT'
 
@@ -42,7 +38,6 @@ dependencies {
     // ---------- SQL ----------
     // Spring Data JPA
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    testImplementation 'org.springframework.modulith:spring-modulith-starter-test'
     // MySQL Driver
     runtimeOnly 'com.mysql:mysql-connector-j'
 
@@ -60,14 +55,9 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
     // Spring Configuration Processor
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-    // Spring Modulith
-    implementation 'org.springframework.modulith:spring-modulith-starter-core'
-    implementation 'org.springframework.modulith:spring-modulith-starter-jpa'
 
     // ---------- BASIC ----------
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    runtimeOnly 'org.springframework.modulith:spring-modulith-actuator'
-    runtimeOnly 'org.springframework.modulith:spring-modulith-observability'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
     // ---------- OTHER ----------
@@ -75,12 +65,6 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
-}
-
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.modulith:spring-modulith-bom:$springModulithVersion"
-    }
 }
 
 tasks.named('test') {

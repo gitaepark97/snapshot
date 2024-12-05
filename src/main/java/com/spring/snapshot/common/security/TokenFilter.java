@@ -1,6 +1,6 @@
 package com.spring.snapshot.common.security;
 
-import com.spring.snapshot.common.provider.TokenProvider;
+import com.spring.snapshot.common.infrastructure.TokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,7 +20,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 class TokenFilter extends OncePerRequestFilter {
 
-    private static final String bearer = "Bearer ";
+    private static final String BEARER = "Bearer ";
+
+    private static final String USER_ID_KEY = "userId";
 
     private final TokenProvider tokenProvider;
 
@@ -39,7 +41,7 @@ class TokenFilter extends OncePerRequestFilter {
 
         try {
             Map<String, Object> claims = tokenProvider.parse(token.get());
-            Long memberId = ((Integer) claims.get("memberId")).longValue();
+            Long memberId = ((Integer) claims.get(USER_ID_KEY)).longValue();
 
             Authentication authentication = new UsernamePasswordAuthenticationToken(memberId, null, null);
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -51,10 +53,10 @@ class TokenFilter extends OncePerRequestFilter {
 
     private Optional<String> extractToken(HttpServletRequest request) {
         String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (!StringUtils.hasText(authorization) || !authorization.startsWith(bearer)) {
+        if (!StringUtils.hasText(authorization) || !authorization.startsWith(BEARER)) {
             return Optional.empty();
         }
-        return Optional.of(authorization.substring(bearer.length()));
+        return Optional.of(authorization.substring(BEARER.length()));
     }
 
 }

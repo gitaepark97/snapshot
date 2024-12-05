@@ -13,4 +13,9 @@ public class ApplicationException extends RuntimeException {
         this.status = status;
     }
 
+    public ApplicationException(ErrorCode code) {
+        super(code.getMessage());
+        this.status = code.getStatus();
+    }
+
 }
